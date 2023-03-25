@@ -1,0 +1,2 @@
+EXTRACTOR_TO_TRANSFORMER_QUERY_HOST=extractor_to_transformer:6379
+TRANSFORMER_TO_LOADER_QUERY_HOST=transformer_to_loader:6379
