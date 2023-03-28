@@ -25,10 +25,13 @@ class Settings:
     def __post_init__(self):
         self.BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
         self.env_path = self.BASE_DIR / ".env" if not self.env_path else self.env_path
-        environ.Env.read_env(self.env_file_path.as_posix())
-        self.EXTRACTOR_TO_TRANSFORMER_QUERY_HOST: str = self.env.db_url(
+        environ.Env.read_env(self.env_path.as_posix())
+        self.EXTRACTOR_TO_TRANSFORMER_QUERY_HOST: str = self.env.str(
             "EXTRACTOR_TO_TRANSFORMER_QUERY_HOST"
         )
-        self.TRANSFORMER_TO_LOADER_QUERY_HOST: str = self.env.db_url(
+        self.TRANSFORMER_TO_LOADER_QUERY_HOST: str = self.env.str(
             "TRANSFORMER_TO_LOADER_QUERY_HOST"
         )
+
+
+settings = Settings()
