@@ -1,9 +1,6 @@
-from dataclasses import dataclass
-from .interfaces import BaseWorker
-from app.settings import settings
+from app.utils.base_worker import BaseWorker
 
 
-@dataclass
 class Transformer(BaseWorker):
     async def handle(self):
         ...

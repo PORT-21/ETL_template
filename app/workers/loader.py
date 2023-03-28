@@ -1,4 +1,4 @@
-from .interfaces import BaseWorker
+from app.utils.base_worker import BaseWorker
 
 
 class Loader(BaseWorker):

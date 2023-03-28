@@ -1,28 +1,34 @@
 version: '3.8'
 
 services:
-  extractor_to_transformer:
-    image: redis:6.2-alpine
+  stack:
+    image: redis/redis-stack
     restart: always
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes: 
-      - extractor_to_transformer_cache:/data
+      - stack_cache:/data
 
-  transformer_to_loader:
-    image: redis:6.2-alpine
-    restart: always
-    ports:
-      - '6380:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    volumes:
-      - transformer_to_loader_cache:/data
+
+  extractor:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    command: python manage.py Extractor
+
+  transformer:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    command: python manage.py Transformer
+
+  loader:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    command: python manage.py Loader
 
 
 volumes:
-  extractor_to_transformer_cache:
-    driver: local
-
-  transformer_to_loader_cache:
+  stack_cache:
     driver: local
